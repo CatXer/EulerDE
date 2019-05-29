@@ -39,24 +39,22 @@ public class DU {
 		yXval[0] = t0;
 		yYval[0] = y0;
 
-		for (int i = 1; i < n; i++) {
-			zXval[i] = t0 + i * h;
-			zZval[i] = zZval[i - 1] + h * getZ(zXval[i - 1], zZval[i - 1], i - 1);
 
-			yXval[i] = t0 + i * h;
-			yYval[i] = yYval[i - 1] + h * getY(yXval[i - 1], yYval[i - 1], i - 1);
-		}
 	}
 
 	public double getYi(int i) {
-		if (i >= 0 && i <= n) return yYval[i];
+		if (i >= 0 && i <= n)
+			return yYval[i];
 		return 0.0;
 	}
 
 	public double getZi(int i) {
-		if (i >= 0 && i <= n) return zZval[i];
+		if (i >= 0 && i <= n)
+			return zZval[i];
 		return 0.0;
 	}
 
-	public int getN() { return n; }
+	public int getN() {
+		return n;
+	}
 }
