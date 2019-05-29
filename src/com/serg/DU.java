@@ -1,41 +1,62 @@
 package com.serg;
 
-import java.util.HashMap;
-
 public class DU {
 
 	// y(2);-y(1)+exp(-x)
-	private double a, b, c, t0 = 0, y0 = 1, yy0 = 0, tn = 3, h = 0.01, n;
+	private double a, b, c;
+	int n;
 
-	HashMap<Double, Double> zVal;
-	HashMap<Double, Double> yVal;
+	double yXval[], yYval[], zXval[], zZval[];
 
-	public DU(double a, double b, double c, double t0, double y0, double yy0, double tn, double h) {
+	public DU(double a, double b, double c) {
 		super();
 		this.a = a;
 		this.b = b;
 		this.c = c;
-		this.t0 = t0;
-		this.y0 = y0;
-		this.yy0 = yy0;
-		this.tn = tn;
-		this.h = h;
-
-		n = (tn - t0) / h;
-		Euler();
 	}
 
-	private void Euler() {
+	private double getY(double x, double y, int index) {
+		return zZval[index];
+	}
 
+	private double getZ(double x, double y, int index) {
+		return -getY(x, y, index) + Math.exp(-x);
+	}
+
+	public void Euler(double t0, double y0, double yy0, double tn, double h) {
+
+		this.n = (int) ((tn - t0) / h);
+
+		zXval = new double[n];
+		zZval = new double[n];
+
+		zXval[0] = t0;
+		zZval[0] = yy0;
+
+		yXval = new double[n];
+		yYval = new double[n];
+
+		yXval[0] = t0;
+		yYval[0] = y0;
+
+		for (int i = 1; i < n; i++) {
+			zXval[i] = t0 + i * h;
+			zZval[i] = zZval[i - 1] + h * getZ(zXval[i - 1], zZval[i - 1], i - 1);
+
+			yXval[i] = t0 + i * h;
+			yYval[i] = yYval[i - 1] + h * getY(yXval[i - 1], yYval[i - 1], i - 1);
+		}
 	}
 
 	public double getYi(int i) {
-
+		if (i >= 0 && i <= n) return yYval[i];
 		return 0.0;
 	}
 
 	public double getZi(int i) {
-
+		if (i >= 0 && i <= n) return zZval[i];
 		return 0.0;
 	}
+
+	public int getN() { return n; }
 }

@@ -26,9 +26,8 @@ public class Frame {
 			protected void paintComponent(Graphics g) {
 				super.paintComponent(g);
 				Graphics2D g2d = (Graphics2D) g;
-				// Shape theCircle = new Ellipse2D.Double(centerX - radius, centerY - radius,
-				// 2.0 * radius, 2.0 * radius);
-				// g2d.draw(theCircle);
+				Shape theCircle = new Ellipse2D.Double(centerX - radius, centerY - radius, 2.0 * radius, 2.0 * radius);
+				g2d.draw(theCircle);
 			}
 
 			@Override
