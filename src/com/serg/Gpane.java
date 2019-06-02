@@ -9,6 +9,7 @@ import java.awt.geom.Line2D;
 
 import javax.swing.JPanel;
 
+@SuppressWarnings("serial")
 public class Gpane extends JPanel {
 
 	private De de;
@@ -23,8 +24,6 @@ public class Gpane extends JPanel {
 	private double x1;
 	private double yMin;
 	private double yMax;
-	private double ygMax;
-	private double ygMin;
 
 	private int nx;
 	private int ny;

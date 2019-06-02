@@ -3,18 +3,11 @@ package com.serg;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.GridLayout;
-import java.awt.Label;
-import java.awt.Shape;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.geom.Ellipse2D;
-import java.awt.geom.Line2D;
 import java.util.Enumeration;
 
 import javax.swing.JButton;
@@ -26,6 +19,7 @@ import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.plaf.FontUIResource;
 
+@SuppressWarnings("serial")
 public class Frame extends JFrame implements ActionListener {
 
 	private JTextField inpEq;
@@ -102,11 +96,11 @@ public class Frame extends JFrame implements ActionListener {
 		// Устанавливаем оптимальный размер окна
 		pack();
 		// Открываем окно
-		setVisible(true);
+		// setVisible(true);
 	}
 
 	public static void setUIFont(FontUIResource f) {
-		Enumeration keys = UIManager.getDefaults().keys();
+		Enumeration<Object> keys = UIManager.getDefaults().keys();
 		while (keys.hasMoreElements()) {
 			Object key = keys.nextElement();
 			Object value = UIManager.get(key);
@@ -159,12 +153,8 @@ public class Frame extends JFrame implements ActionListener {
 		return true;
 	}
 
-	public int getScreenWidth() {
-		return screenWidth;
-	}
+	public int getScreenWidth() { return screenWidth; }
 
-	public int getScreenHeight() {
-		return screenHeight;
-	}
+	public int getScreenHeight() { return screenHeight; }
 
 }
