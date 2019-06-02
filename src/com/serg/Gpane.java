@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
 
 import javax.swing.JPanel;
@@ -22,6 +23,8 @@ public class Gpane extends JPanel {
 	private double x1;
 	private double yMin;
 	private double yMax;
+	private double ygMax;
+	private double ygMin;
 
 	private int nx;
 	private int ny;
@@ -40,9 +43,6 @@ public class Gpane extends JPanel {
 
 		if (de != null) {
 			g2d.setFont(new Font("TimesRoman", Font.BOLD, 15));
-
-			double zeroXCoord = 0;
-			double zeroYCoord = 0;
 
 			double xgLength = nx * dx;
 			double ygLength = ny * dy;
@@ -66,10 +66,6 @@ public class Gpane extends JPanel {
 				x += xStep;
 
 			}
-			zeroXCoord = (xgLength / ((x1 - x0) / Math.abs(x0))) + 2 * pdg;
-
-			// yMin -
-
 			// y //
 
 			axisX = 2 * pdg;
@@ -86,22 +82,34 @@ public class Gpane extends JPanel {
 				x -= yStep;
 
 			}
-			zeroYCoord = (ygLength * Math.abs(yMax) / Math.abs(yMin)) / 2 + pdg;
 
 			double xZero = 2 * pdg;
 			double yZero = pdg + ygLength;
 
-			double oneX = xgLength / (x1 - x0);
-			double oneY = ygLength / (yMax - yMin);
+			g2d.draw(new Ellipse2D.Double(xZero - 2.5, yZero - 2.5, 5, 5));
+
+			double oneX = xgLength / (nx * xStep);
+			double oneY = ygLength / (ny * yStep);
+
 			int n = de.getN();
 			double tmpX = de.getX(0);
 			double tmpY = de.getY(0);
 			double tmpY1 = de.getY1(0);
+
+			System.out.println(yMax);
+			System.out.println(yMin);
+			System.out.println(ny * yStep);
+			System.out.println(ygLength);
+			System.out.println(oneY);
+
+			g2d.draw(new Ellipse2D.Double(xZero - ((tmpX - x0) * oneX) - 2.5, yZero - ((tmpY1 - yMin) * oneY) - 2.5, 5,
+					5));
+
 			for (int i = 1; i < n; i++) {
-				g2d.draw(new Line2D.Double(xZero - (x0 * oneX) + tmpX * oneX, yZero + (yMin * oneY) - tmpY * oneY,
-						xZero - (x0 * oneX) + de.getX(i) * oneX, yZero + (yMin * oneY) - de.getY(i) * oneY));
-				g2d.draw(new Line2D.Double(xZero - (x0 * oneX) + tmpX * oneX, yZero + (yMin * oneY) - tmpY1 * oneY,
-						xZero - (x0 * oneX) + de.getX(i) * oneX, yZero + (yMin * oneY) - de.getY1(i) * oneY));
+				g2d.draw(new Line2D.Double(xZero + ((tmpX - x0) * oneX), yZero - ((tmpY - yMin) * oneY),
+						xZero + ((de.getX(i) - x0) * oneX), yZero - ((de.getY(i) - yMin) * oneY)));
+				g2d.draw(new Line2D.Double(xZero + ((tmpX - x0) * oneX), yZero - ((tmpY1 - yMin) * oneY),
+						xZero + ((de.getX(i) - x0) * oneX), yZero - ((de.getY1(i) - yMin) * oneY)));
 				tmpX = de.getX(i);
 				tmpY = de.getY(i);
 				tmpY1 = de.getY1(i);
@@ -126,24 +134,28 @@ public class Gpane extends JPanel {
 		xStep = 0.1;
 		yStep = 0.1;
 
-		x0 = de.getXmin();
-		x1 = de.getXmax();
-		yMin = de.getYmin();
-		yMax = de.getYmax();
+		
+		x0 = (int) (de.getXmin() % 1 == 0 ? de.getXmin() : de.getXmin() - 1);
+		x1 = (int) (de.getXmax() % 1 == 0 ? de.getXmax() : de.getXmax() + 1);
+
+		yMin = (int) (de.getYmin() % 1 == 0 ? de.getYmin() : de.getYmin() - 1);
+		yMax = (int) (de.getYmax() % 1 == 0 ? de.getYmax() : de.getYmax() + 1);
 
 		while (true) {
 			nx = (int) ((x1 - x0) / xStep);
 			ny = (int) ((yMax - yMin) / yStep);
+
 			if ((int) ((nx + 1) * dx + 2 * pdg + parent.getWidth() - getWidth()) < parent.getScreenWidth()
 					&& (int) ((ny + 1) * dy + 2 * pdg + parent.getHeight() - getHeight()) < parent.getScreenHeight()) {
+				if (ny % 2 != 0 || nx % 2 != 0) {
+					yMax++;
+					continue;
+				}
 				break;
 			}
 			xStep += 0.1;
 			yStep += 0.1;
 		}
-
-		nx = nx % 2 == 0 ? nx : nx + 1;
-		ny = ny % 2 == 0 ? ny : ny + 1;
 
 		parent.setSize((int) ((nx + 1) * dx + 2 * pdg + parent.getWidth() - getWidth()),
 				(int) ((ny + 1) * dy + 2 * pdg + parent.getHeight() - getHeight()));

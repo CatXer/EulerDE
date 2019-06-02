@@ -53,10 +53,12 @@ public class De {
 			yMin = yVal[0];
 		}
 
+		System.out.println(String.format("X:%.1f  Y:%.1f  Y1:%.1f", xVal[0], yVal[0], y1Val[0]));
 		for (int i = 1; i < n; i++) {
 			yVal[i] = yVal[i - 1] + h * y1Val[i - 1];
 			y1Val[i] = y1Val[i - 1] + h * getY1(xVal[i - 1], yVal[i]);
 			xVal[i] = xVal[i - 1] + h;
+			System.out.println(String.format("X:%.1f  Y:%.1f  Y1:%.1f", xVal[i], yVal[i], y1Val[i]));
 			if (yVal[i] > y1Val[i]) {
 				yMax = yVal[i] > yMax ? yVal[i] : yMax;
 				yMin = y1Val[i] < yMin ? y1Val[i] : yMin;
