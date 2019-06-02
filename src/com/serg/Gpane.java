@@ -59,8 +59,7 @@ public class Gpane extends JPanel {
 				if (i % 2 == 0) {
 					g2d.draw(new Line2D.Double(axisX, axisY, axisX, 1.3 * pdg + ygLength));
 					g2d.drawString(String.format("%.1f", x), (float) (axisX - 10), (float) (xTxtY));
-				} else
-					g2d.draw(new Line2D.Double(axisX, axisY, axisX, 1.2 * pdg + ygLength));
+				} else g2d.draw(new Line2D.Double(axisX, axisY, axisX, 1.2 * pdg + ygLength));
 
 				axisX += dx;
 				x += xStep;
@@ -76,8 +75,7 @@ public class Gpane extends JPanel {
 				if (i % 2 == 0) {
 					g2d.draw(new Line2D.Double(1.7 * pdg, axisY, 2 * pdg + xgLength, axisY));
 					g2d.drawString(String.format("%.1f", x), (float) (yTxtX), (float) (axisY + 5));
-				} else
-					g2d.draw(new Line2D.Double(1.8 * pdg, axisY, 2 * pdg + xgLength, axisY));
+				} else g2d.draw(new Line2D.Double(1.8 * pdg, axisY, 2 * pdg + xgLength, axisY));
 				axisY += dy;
 				x -= yStep;
 
@@ -95,12 +93,6 @@ public class Gpane extends JPanel {
 			double tmpX = de.getX(0);
 			double tmpY = de.getY(0);
 			double tmpY1 = de.getY1(0);
-
-			System.out.println(yMax);
-			System.out.println(yMin);
-			System.out.println(ny * yStep);
-			System.out.println(ygLength);
-			System.out.println(oneY);
 
 			g2d.draw(new Ellipse2D.Double(xZero - ((tmpX - x0) * oneX) - 2.5, yZero - ((tmpY1 - yMin) * oneY) - 2.5, 5,
 					5));
@@ -131,30 +123,49 @@ public class Gpane extends JPanel {
 	public void addEq(De de) {
 		this.de = de;
 		wait = false;
+
+		// add size proportiaonal ->
+		dx = 20;
+		dy = 20;
 		xStep = 0.1;
 		yStep = 0.1;
 
-		
+		System.out.println("Xmin: " + de.getXmin());
+		System.out.println("Xmax: " + de.getXmax());
+		System.out.println("Ymin: " + de.getYmin());
+		System.out.println("Ymax: " + de.getYmax());
+
 		x0 = (int) (de.getXmin() % 1 == 0 ? de.getXmin() : de.getXmin() - 1);
 		x1 = (int) (de.getXmax() % 1 == 0 ? de.getXmax() : de.getXmax() + 1);
 
 		yMin = (int) (de.getYmin() % 1 == 0 ? de.getYmin() : de.getYmin() - 1);
 		yMax = (int) (de.getYmax() % 1 == 0 ? de.getYmax() : de.getYmax() + 1);
 
+		System.out.println("x0: " + x0);
+		System.out.println("x1: " + x1);
+		System.out.println("yMin: " + yMin);
+		System.out.println("yMax: " + yMax);
+
 		while (true) {
 			nx = (int) ((x1 - x0) / xStep);
 			ny = (int) ((yMax - yMin) / yStep);
+			System.out.println("nx: " + nx);
+			System.out.println("ny: " + ny);
 
-			if ((int) ((nx + 1) * dx + 2 * pdg + parent.getWidth() - getWidth()) < parent.getScreenWidth()
-					&& (int) ((ny + 1) * dy + 2 * pdg + parent.getHeight() - getHeight()) < parent.getScreenHeight()) {
-				if (ny % 2 != 0 || nx % 2 != 0) {
+			if ((nx / 10 == 0 || ny / 10 == 0)
+					|| (int) ((nx + 1) * dx + 2 * pdg + parent.getWidth() - getWidth()) < parent.getScreenWidth()
+							&& (int) ((ny + 1) * dy + 2 * pdg + parent.getHeight() - getHeight()) < parent
+									.getScreenHeight()) {
+				if (ny % 2 != 0) {
 					yMax++;
 					continue;
 				}
 				break;
 			}
-			xStep += 0.1;
-			yStep += 0.1;
+			xStep *= 10;
+			yStep *= 10;
+			dx *= 2;
+			dy *= 2;
 		}
 
 		parent.setSize((int) ((nx + 1) * dx + 2 * pdg + parent.getWidth() - getWidth()),
