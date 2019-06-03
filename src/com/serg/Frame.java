@@ -55,7 +55,7 @@ public class Frame extends JFrame implements ActionListener {
 
 		JPanel topPanel = new JPanel();
 		topPanel.setBackground(Color.cyan);
-		inpEq = new JTextField("y_2; Math.exp(-(x_1)) - (y_1)", 30);
+		inpEq = new JTextField("y_2; Math.exp(-(x_0)) - (y_0)", 30);
 
 		topPanel.add(inpEq);
 
@@ -116,7 +116,7 @@ public class Frame extends JFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		String equat = inpEq.getText();
-		if (!equat.equals("") && equat.contains("y_2") && equat.contains("x_1")) {
+		if (!equat.equals("") && equat.contains("y_2") && equat.contains("x_0")) {
 			if (isNuber(y0.getText()) && isNuber(y1.getText()) && isNuber(x0.getText()) && isNuber(xN.getText())
 					&& isNuber(h.getText())) {
 				double x_0 = Double.parseDouble(x0.getText());
@@ -154,12 +154,8 @@ public class Frame extends JFrame implements ActionListener {
 		return true;
 	}
 
-	public int getScreenWidth() {
-		return screenWidth;
-	}
+	public int getScreenWidth() { return screenWidth; }
 
-	public int getScreenHeight() {
-		return screenHeight;
-	}
+	public int getScreenHeight() { return screenHeight; }
 
 }

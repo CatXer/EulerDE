@@ -51,7 +51,7 @@ public class De {
 		System.out.println(String.format("X:%.1f  Y:%.1f  Y1:%.1f", xVal[0], yVal[0], y1Val[0]));
 		for (int i = 1; i < n; i++) {
 			yVal[i] = yVal[i - 1] + h * y1Val[i - 1];
-			y1Val[i] = y1Val[i - 1] + h * getY1(xVal[i - 1], yVal[i]);
+			y1Val[i] = y1Val[i - 1] + h * getY1(xVal[i - 1], yVal[i - 1]);
 			xVal[i] = xVal[i - 1] + h;
 			System.out.println(String.format("X:%.1f  Y:%.1f  Y1:%.1f", xVal[i], yVal[i], y1Val[i]));
 			if (yVal[i] > y1Val[i]) {
@@ -88,7 +88,7 @@ public class De {
 		double y1 = 0;
 		ScriptEngineManager mgr = new ScriptEngineManager();
 		ScriptEngine engine = mgr.getEngineByName("JavaScript");
-		String yp = y1part.replaceAll("x_1", x + "").replaceAll("y_1", y + "");
+		String yp = y1part.replaceAll("x_0", x + "").replaceAll("y_0", y + "");
 		try {
 			y1 = (double) engine.eval(yp);
 		} catch (ScriptException e) {
