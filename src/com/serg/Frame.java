@@ -56,14 +56,12 @@ public class Frame extends JFrame implements ActionListener {
 		JPanel topPanel = new JPanel();
 		topPanel.setBackground(Color.cyan);
 		inpEq = new JTextField("y_2; Math.exp(-(x_1)) - (y_1)", 30);
-		solve = new JButton("Solve!");
-		solve.addActionListener(this);
+
 		topPanel.add(inpEq);
-		topPanel.add(solve);
 
 		JPanel leftPanel = new JPanel();
 		leftPanel.setBackground(Color.cyan);
-		leftPanel.setLayout(new GridLayout(5, 2, 5, 10));
+		leftPanel.setLayout(new GridLayout(6, 2, 5, 10));
 
 		JLabel ly0 = new JLabel("y0=");
 		y0 = new JTextField(4);
@@ -75,6 +73,8 @@ public class Frame extends JFrame implements ActionListener {
 		xN = new JTextField(4);
 		JLabel lh = new JLabel("h=");
 		h = new JTextField(4);
+		solve = new JButton("Solve!");
+		solve.addActionListener(this);
 
 		leftPanel.add(ly0);
 		leftPanel.add(y0);
@@ -86,6 +86,7 @@ public class Frame extends JFrame implements ActionListener {
 		leftPanel.add(xN);
 		leftPanel.add(lh);
 		leftPanel.add(h);
+		leftPanel.add(solve);
 
 		gPanel = new Gpane(this);
 
@@ -153,8 +154,12 @@ public class Frame extends JFrame implements ActionListener {
 		return true;
 	}
 
-	public int getScreenWidth() { return screenWidth; }
+	public int getScreenWidth() {
+		return screenWidth;
+	}
 
-	public int getScreenHeight() { return screenHeight; }
+	public int getScreenHeight() {
+		return screenHeight;
+	}
 
 }
