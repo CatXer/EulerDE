@@ -47,6 +47,10 @@ public class De {
 			yMax = y1Val[0];
 			yMin = yVal[0];
 		}
+		
+		double yVal2 = y0;
+		double y1Val2 = y10;
+		double xVal2 = x0;
 
 		System.out.println(String.format("X:%.1f  Y:%.1f  Y1:%.1f", xVal[0], yVal[0], y1Val[0]));
 		for (int i = 1; i < n; i++) {
@@ -61,7 +65,16 @@ public class De {
 				yMax = y1Val[i] > yMax ? y1Val[i] : yMax;
 				yMin = yVal[i] < yMin ? yVal[i] : yMin;
 			}
+			for (int j = 0; j < 2; j++) {
+				y1Val2 = y1Val2 + getY1(xVal2, yVal2) * (h / 2);
+				yVal2 = yVal2 + y1Val2 * (h / 2);
+				xVal2 = xVal2 + h / 2;
+			}
+
 		}
+		System.out.println("Error y is :" + Math.abs(yVal[n - 1] - yVal2)/3);
+		System.out.println("Error y` is :" + Math.abs(y1Val[n - 1] - y1Val2)/3);
+
 	}
 
 	public double getYmax() { return yMax; }

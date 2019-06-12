@@ -186,6 +186,11 @@ public class Gpane extends JPanel {
 				xStep *= 5;
 			}
 		}
+		System.out.println("yMin: " + yMin);
+		System.out.println("yMax: " + yMax);
+		System.out.println("nx: " + nx);
+		System.out.println("ny: " + ny);
+		
 		parent.setSize((int) ((nx + 1) * dx + 2 * pdg + parent.getWidth() - getWidth()),
 				(int) ((ny + 1) * dy + 2 * pdg + parent.getHeight() - getHeight()));
 
