@@ -30,7 +30,7 @@ public class Gpane extends JPanel {
 
 	private Frame parent;
 
-	private String calc = "Claculation";
+	private String calc = "Calculation";
 	private int calcK = 0;
 
 	public Gpane(Frame parent) {
@@ -65,7 +65,8 @@ public class Gpane extends JPanel {
 				if (i % 2 == 0) {
 					g2d.draw(new Line2D.Double(axisX, axisY, axisX, 1.3 * pdg + ygLength));
 					g2d.drawString(String.format("%.1f", x), (float) (axisX - 10), (float) (xTxtY));
-				} else g2d.draw(new Line2D.Double(axisX, axisY, axisX, 1.2 * pdg + ygLength));
+				} else
+					g2d.draw(new Line2D.Double(axisX, axisY, axisX, 1.2 * pdg + ygLength));
 
 				axisX += dx;
 				x += xStep;
@@ -81,7 +82,8 @@ public class Gpane extends JPanel {
 				if (i % 2 == 0) {
 					g2d.draw(new Line2D.Double(1.7 * pdg, axisY, 2 * pdg + xgLength, axisY));
 					g2d.drawString(String.format("%.1f", x), (float) (yTxtX), (float) (axisY + 5));
-				} else g2d.draw(new Line2D.Double(1.8 * pdg, axisY, 2 * pdg + xgLength, axisY));
+				} else
+					g2d.draw(new Line2D.Double(1.8 * pdg, axisY, 2 * pdg + xgLength, axisY));
 				axisY += dy;
 				x -= yStep;
 
@@ -117,7 +119,7 @@ public class Gpane extends JPanel {
 		} else if (wait) {
 
 			g2d.setColor(Color.BLACK);
-			g2d.drawString(calc, (float) (getWidth() / 2), (float) (getHeight() / 2));
+			g2d.drawString(calc, (float) (getWidth() / 2 - pdg), (float) (getHeight() / 2));
 			calc += " .";
 			calcK++;
 			if (calcK == 4) {

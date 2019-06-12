@@ -55,7 +55,7 @@ public class Frame extends JFrame implements ActionListener {
 
 		JPanel topPanel = new JPanel();
 		topPanel.setBackground(Color.cyan);
-		inpEq = new JTextField("y_2; Math.exp(-(x_0)) - (y_0)", 30);
+		inpEq = new JTextField("y_2; Math.exp(-(x_0)) - (y_0)", 60);
 
 		topPanel.add(inpEq);
 
